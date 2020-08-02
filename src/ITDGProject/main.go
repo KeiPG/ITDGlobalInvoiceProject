@@ -240,6 +240,7 @@ func main() {
 				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
 			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%s%f\n",inv_ID,invoice_creation_date,Cus_ID,cur_name,amount)
+			fmt.Println("---------------------------------------------------------------------")
 		}
 	}
 	
@@ -308,6 +309,7 @@ func main() {
 			}
 			//print results to console
 			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%s%f\n",inv_ID,invoice_creation_date,Cus_ID,cur_name,amount)
+			fmt.Println("---------------------------------------------------------------------")
 		}
 	}
 	
