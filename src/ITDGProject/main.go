@@ -18,6 +18,12 @@ type Customer struct{
 	address string
 	currency_ID int
 }
+type databaseCurrency struct {
+	EUR float64 `json:"EUR"`
+	GBP float64 `json:"GBP"`
+	JPY float64 `json:"JPY"`
+	USD float64 `json:"USD"`
+}
 type Currency struct{
 	Date string
 	FromCurrency string
@@ -198,31 +204,42 @@ func main() {
 			err = json.Unmarshal(body,&RatesToDate)
 			var amountInGBP float64
 			var amountInGBPToDate float64
+
+			//this was my attempt at using the DB values I must have messed up the JSON
+			// var amountInGBPFromDB float64
+
+			// var dbRates databaseCurrency
+
+			// err = json.Unmarshal(exchange_rate,&dbRates)
+
 			if cur_name == "USD"{
+				// amountInGBPFromDB = (amount/dbRates.Rates.USD)*dbRates.Rates.GBP
+				// amountInGBPFromDB = math.Floor(amountInGBPFromDB*100)/100
 				amountInGBPToDate = (amount/Rates.Rates.USD)*Rates.Rates.GBP
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = (amount/RatesToDate.Rates.USD)*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
+				// fmt.Printf("Amount in GBP From DB %f\n",amountInGBPFromDB)
 			}
 			if cur_name == "EUR"{
 				amountInGBPToDate = amount*Rates.Rates.GBP
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = amount*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
 			if cur_name == "JPY"{
 				amountInGBPToDate = (amount/Rates.Rates.JPY)*Rates.Rates.GBP
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = (amount/RatesToDate.Rates.JPY)*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
-			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%v\n",inv_ID,invoice_creation_date,Cus_ID,amount)
+			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%s%f\n",inv_ID,invoice_creation_date,Cus_ID,cur_name,amount)
 		}
 	}
 	
@@ -240,7 +257,7 @@ func main() {
 			var inv_ID int
 			var invoice_creation_date string
 			var Cus_ID int
-			var amount int
+			var amount float64
 			var cus_id int
 			var name string
 			var address string
@@ -270,27 +287,27 @@ func main() {
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = (amount/RatesToDate.Rates.USD)*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
 			if cur_name == "EUR"{
 				amountInGBPToDate = amount*Rates.Rates.GBP
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = amount*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
 			if cur_name == "JPY"{
 				amountInGBPToDate = (amount/Rates.Rates.JPY)*Rates.Rates.GBP
 				amountInGBPToDate = math.Floor(amountInGBPToDate*100)/100
 				amountInGBP = (amount/RatesToDate.Rates.JPY)*RatesToDate.Rates.GBP
 				amountInGBP = math.Floor(amountInGBP*100)/100
-				fmt.Printf("Amount in GBP on Creation Date %v\n",amountInGBP)
-				fmt.Printf("Amount in GBP today %v\n",amountInGBPToDate)
+				fmt.Printf("Amount in GBP on Creation Date %f\n",amountInGBP)
+				fmt.Printf("Amount in GBP today %f\n",amountInGBPToDate)
 			}
 			//print results to console
-			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%v\n",inv_ID,invoice_creation_date,Cus_ID,amount)
+			fmt.Printf("Invoice ID:%v Date:%s Customer ID:%v Amount:%s%f\n",inv_ID,invoice_creation_date,Cus_ID,cur_name,amount)
 		}
 	}
 	
