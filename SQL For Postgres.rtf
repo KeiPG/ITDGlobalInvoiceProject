@@ -1,0 +1,80 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+CREATE TABLE Currencies(\
+    ID SERIAL,\
+    Currency_Name VARCHAR(3),\
+    Exchange_Rates JSONB,\
+    PRIMARY KEY(ID)\
+);\
+\
+\
+CREATE TABLE Customers(\
+    ID SERIAL,\
+    Name TEXT NOT NULL,\
+    Address CHAR(100) NOT NULL,\
+    Currency_ID INTEGER,\
+    PRIMARY KEY(ID),\
+    CONSTRAINT fk_Currency\
+        FOREIGN KEY(CURRENCY_ID)\
+            REFERENCES Currencies(ID)\
+);\
+\
+\
+CREATE TABLE Invoices(\
+    ID SERIAL PRIMARY KEY,\
+    Invoice_Creation_Date DATE,\
+    Customer_ID INTEGER,\
+    Amount INTEGER,\
+    CONSTRAINT fk_Customer\
+        FOREIGN KEY(CUSTOMER_ID)\
+            REFERENCES customers(ID)\
+);\
+\
+\
+\
+INSERT INTO CURRENCIES(Currency_Name, Exchange_Rates) VALUES('GBP','\{"USD":1.3,"EUR":1.1,"JPY":138\}');\
+\
+INSERT INTO CURRENCIES(Currency_Name, Exchange_Rates) VALUES('USD','\{"EUR":0.84,"GBP":0.76,"JPY":104.91\}');\
+\
+INSERT INTO CURRENCIES(Currency_Name, Exchange_Rates) VALUES('EUR','\{"USD":1.18,"GBP":0.9,"JPY":124.31\}');\
+\
+INSERT INTO CURRENCIES(Currency_Name, Exchange_Rates) VALUES('JPY','\{"USD":0.0095,"GBP":0.0072,"EUR":0.008\}');\
+\
+INSERT INTO Customers(Name, Address, Currency_ID) VALUES('BEN BECKMAN', '23 SEA STREET',1);\
+\
+INSERT INTO Customers(Name, Address, Currency_ID) VALUES('SHANKS REDHAIR', '23 SEA STREET',2);\
+\
+INSERT INTO Customers(Name, Address, Currency_ID) VALUES('MONKEY D LUFFY', '23 SHIP STREET',3);\
+\
+INSERT INTO Customers(Name, Address, Currency_ID) VALUES('ZORO', '23 NOWHERE STREET',4);\
+\
+INSERT INTO invoices(Invoice_Creation_Date, Customer_ID, Amount) VALUES(NOW(), '1',40000);\
+\
+INSERT INTO invoices(Invoice_Creation_Date, Customer_ID, Amount) VALUES(NOW(), '2',40200);\
+\
+INSERT INTO invoices(Invoice_Creation_Date, Customer_ID, Amount) VALUES(NOW(), \'913\'92,40200);\
+\
+INSERT INTO invoices(Invoice_Creation_Date, Customer_ID, Amount) VALUES(NOW(), \'914\'92,40200);\
+\
+INSERT INTO invoices(Invoice_Creation_Date, Customer_ID, Amount) VALUES(\'912000-01-01\'92, '2',40200);\
+\
+SELECT* FROM CUSTOMERS\
+JOIN Currencies ON Customers.currency_ID = currencies.id;\
+\
+SELECT* FROM invoices\
+JOIN Customers ON invoices.customer_id = Customers.id\
+JOIN Currencies ON Customers.Currency_ID = CUrrencies.id\
+WHERE Customer_id = 1\
+\
+SELECT* FROM invoices\
+JOIN Customers ON invoices.customer_id = Customers.id\
+JOIN Currencies ON Customers.Currency_ID = CUrrencies.id\
+ORDER BY currency_name\
+\
+}
